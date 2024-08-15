@@ -1,7 +1,19 @@
 import streamlit as st
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Load dataset
+if os.path.exists('day.csv'):
+    df_day = pd.read_csv('day.csv')
+else:
+    st.error('File day.csv tidak ditemukan.')
+
+if os.path.exists('hour.csv'):
+    df_hour = pd.read_csv('hour.csv')
+else:
+    st.error('File hour.csv tidak ditemukan.')
 
 # Load dataset
 df_day = pd.read_csv('day.csv')
@@ -21,12 +33,16 @@ st.sidebar.header('User Input Features')
 selected_dataset = st.sidebar.selectbox('Select Dataset', ['Daily', 'Hourly'])
 
 # Display dataset
-if selected_dataset == 'Daily':
-    st.subheader('Dataset Harian')
-    st.write(df_day.head())
+if os.path.exists('day.csv'):
+    df_day = pd.read_csv('day.csv')
 else:
-    st.subheader('Dataset Jam')
-    st.write(df_hour.head())
+    st.error('File day.csv tidak ditemukan.')
+
+if os.path.exists('hour.csv'):
+    df_hour = pd.read_csv('hour.csv')
+else:
+    st.error('File hour.csv tidak ditemukan.')
+
 
 # Visualization: Penggunaan Sepeda Berdasarkan Musim
 st.subheader('Penggunaan Sepeda Berdasarkan Musim')
